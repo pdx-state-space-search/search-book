@@ -1,0 +1,15 @@
+:root { --content-max-width: 48em; }
+.content main { font-size: 1.8rem; line-height: 1.65; }
+.content p, .content li { overflow-wrap: break-word; }
+.content h1, .content h2, .content h3 { line-height: 1.25; }
+.content img {
+  display: block; margin-inline: auto;
+  max-width: 100%; height: auto;
+}
+.content table { display: block; max-width: 100%; overflow-x: auto; }
+.content pre { overflow-x: auto; }
+.content code { font-size: .94em; }
+.content figure { margin: 1.8em 0; }
+.content figcaption { font-size: .92em; }
+.content a { text-underline-offset: .15em; }
+@media (max-width: 600px) { .content main { font-size: 1.7rem; } }

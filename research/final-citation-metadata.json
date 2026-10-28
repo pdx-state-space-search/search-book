@@ -1,0 +1,148 @@
+[
+  {
+    "DOI": "10.1145/368273.368557",
+    "title": [
+      "A machine program for theorem-proving"
+    ],
+    "author": [
+      {
+        "given": "Martin",
+        "family": "Davis",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Institute of Mathematical Sciences, New York Univ., New York"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "George",
+        "family": "Logemann",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Institute of Mathematical Sciences, New York Univ., New York"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "Donald",
+        "family": "Loveland",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Institute of Mathematical Sciences, New York Univ., New York"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "publisher": "Association for Computing Machinery (ACM)",
+    "container-title": [
+      "Communications of the ACM"
+    ],
+    "volume": "5",
+    "issue": "7",
+    "page": "394-397",
+    "published": {
+      "date-parts": [
+        [
+          1962,
+          7
+        ]
+      ]
+    },
+    "source": "Crossref"
+  },
+  {
+    "DOI": "10.1126/science.220.4598.671",
+    "title": [
+      "Optimization by Simulated Annealing"
+    ],
+    "author": [
+      {
+        "given": "S.",
+        "family": "Kirkpatrick",
+        "sequence": "first",
+        "affiliation": [
+          {
+            "name": "Research staff members at IBM Thomas J. Watson Research Center, Yorktown Heights, New York 10598"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "suffix": "Jr.",
+        "given": "C. D.",
+        "family": "Gelatt",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Research staff members at IBM Thomas J. Watson Research Center, Yorktown Heights, New York 10598"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      },
+      {
+        "given": "M. P.",
+        "family": "Vecchi",
+        "sequence": "additional",
+        "affiliation": [
+          {
+            "name": "Instituto Venezolano de Investigaciones Cientificas, Caracas 1010A, Venezuela"
+          }
+        ],
+        "role": [
+          {
+            "vocabulary": "crossref",
+            "role": "author"
+          }
+        ]
+      }
+    ],
+    "publisher": "American Association for the Advancement of Science (AAAS)",
+    "container-title": [
+      "Science"
+    ],
+    "volume": "220",
+    "issue": "4598",
+    "page": "671-680",
+    "published": {
+      "date-parts": [
+        [
+          1983,
+          5,
+          13
+        ]
+      ]
+    },
+    "source": "Crossref"
+  }
+]

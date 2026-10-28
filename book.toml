@@ -1,0 +1,24 @@
+[book]
+title = "State-Space Search"
+authors = ["ChatGPT", "Bart Massey"]
+language = "en"
+src = "src"
+description = "A concise, ten-week introduction to combinatorial state-space search."
+
+[build]
+build-dir = "_build"
+create-missing = false
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "navy"
+additional-css = ["theme/course.css"]
+smart-punctuation = true
+mathjax-support = false
+
+[output.html.search]
+enable = true
+limit-results = 20
+
+[output.html.print]
+enable = false

@@ -5,12 +5,19 @@
 Manual instructor review and substantive revision are in
 progress. Read STATUS.md, BOOK-NOTES.md, and the newest
 research/review-log.md entry first. The introduction and
-Week 1 were rewritten around the general search philosophy,
-NP-hard instances, and solution quality versus search effort.
+Weeks 1–2 were revised around the general search philosophy,
+NP-hard instances, graph coloring, and a self-contained SAT
+foundation with finite quantified shorthand and grounding.
+AC-3 is omitted, including from Week 10. WalkSAT appears in
+the local-search chapter. Problems/instances/classes are
+introduced informally; n and node counts are explained.
 The authors are ChatGPT and Bart Massey. A closing Epilogue
 is reserved for history and authorship discussion. The
 early-AI/hardware historical claim is deferred.
-Weeks 2–10 remain first drafts awaiting manual review.
+Weeks 1–2 await Bart's next read. Weeks 3–10 remain first
+drafts awaiting manual review; Week 6 has the small SAT
+addition. Commit only when requested; do not push without
+separate explicit permission.
 The completion statements below describe the first-draft
 checkpoint, not completion of all book authoring.
 

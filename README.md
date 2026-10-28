@@ -3,8 +3,9 @@
 A ten-week mdBook draft for Bart Massey's PSU CS 410/510
 course, by ChatGPT and Bart Massey. All ten chapters have a
 first draft; instructor review and substantive revision are
-in progress. The introduction
-and Week 1 were rewritten from feedback on 2026-10-27.
+in progress. The introduction and Weeks 1–2 were revised from
+feedback on 2026-10-27. Week 6 now includes a short SAT
+local-search section introducing WalkSAT.
 
 ## Read or build
 
@@ -32,8 +33,9 @@ scheduling are compressed applications in the engineering week.
 
 The initial weekly target was approximately 2,500–3,500 words,
 including a few short reading recommendations. The revised
-Week 1 contains about 3,300 words; the other weekly chapters
-contain about 2,100–2,500. Further changes follow instructional
+Week 1 contains about 3,900 words and Week 2 about 2,800;
+the other weekly chapters contain about 2,100–2,500.
+Further changes follow instructional
 needs rather than a fixed word count. Reflowable HTML
 has no fixed page count; page length is not forced by small type
 or by hiding necessary explanations. Figures have descriptive
@@ -55,10 +57,11 @@ uses Chromium and the system node-ws package; its screenshots
 are written to a temporary directory. It checks all ten chapters
 and the introduction, reference pages, and Epilogue at desktop
 and narrow widths and with 200% text. It also captures page
-content and a
-sheet of all teaching figures for manual inspection. The new
-growth figure can be regenerated with
-`python3 checks/render_growth.py` (requires matplotlib).
+content, quantified formulas, and a sheet of all teaching
+figures for manual inspection. Regenerate the growth figure
+with `python3 checks/render_growth.py` (requires matplotlib).
+The three introductory example diagrams use
+`python3 checks/render_intro_figures.py` (standard library).
 Algorithm checks explore finite models independently of the
 prose. They are regression evidence, not a substitute for the
 mathematical arguments.
@@ -70,8 +73,8 @@ pseudocode were inspected then. See STATUS.md and
 research/review-log.md for current revision checks;
 research/final-validation.md preserves that earlier checkpoint.
 See those records for results, review scope, and limitations.
-Per-workstream research
-notes retain source metadata and claim checks. The validation
+Per-workstream research notes retain source metadata and
+claim checks. The validation
 scripts are editorial tools outside the student-facing src/ tree.
 
 ## License and provenance

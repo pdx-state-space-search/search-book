@@ -213,3 +213,87 @@ and author block and the closing Epilogue. It appears as an
 unnumbered final section. Current screenshots are temporary
 under /tmp/search-book-browser-PPcaFl; browser-latest.json
 records the run.
+
+## Review through Week 2 — 2026-10-27 Pacific
+
+Applied the updated BOOK-NOTES.md and Bart's clarifications.
+The notes themselves are preserved unchanged by the agent.
+
+- Added original diagrams for graph coloring, number
+  partitioning, and pathfinding. Reused the coloring graph
+  explicitly as its CSP constraint graph. Related map
+  coloring to graph coloring once, then used graph terms.
+- Explained problems as collections of parameter
+  instantiations, instances as particular parameter choices,
+  and classes as collections of problems with a stated
+  property. Deferred full formal descriptions to an
+  algorithms textbook; did not identify the problem with
+  its yes-instance language.
+- Made n's meaning explicit, introduced nodes through
+  candidate records, and emphasized machine-independent
+  counts with the stated polynomial-per-node assumption.
+  Changed the growth axis to Total nodes examined.
+  Removed unintroduced makespan and tile-puzzle examples
+  from Week 1 and named problems at example re-entry.
+- Rewrote Week 2 with concrete variables/values first,
+  a CNF refresher, named Boolean variables, finite quantified
+  shorthand, explicit grounded expansions, and the two
+  directions of encoding correctness.
+- Removed AC-3 and its unused figure from the current book,
+  rather than moving them to Week 10. Retained forward
+  checking, soundness versus completeness, and unit
+  propagation within complete SAT search. Active checks
+  now test forward checking rather than the retired AC-3
+  implementation; older evidence stays in historical notes.
+- Named most-constrained-first/MRV and least-constraining-
+  first/LCV, with their fail-first and preserve-flexibility
+  motivations qualified as heuristic intentions.
+- Added Tsang and Crawford–Auton readings to Week 2 and a
+  short WalkSAT treatment/reading to Week 6. Chapter 2
+  remains the main SAT foundation; local SAT repair returns
+  in Week 6. The earlier historical-hardware claim is still
+  omitted.
+- Aligned all weekly contents labels with chapter titles
+  and added a regression check for their agreement.
+
+Independent review in review-2026-10-27-chapter2.md checked
+conceptual clarity, grounding, examples, figures, and counts.
+Root corrected the Crawford–Auton page range to 21–27 and
+adopted the clarity suggestions for node records, local n
+meanings, and one explicitly grounded edge/color clause.
+
+Completed validation:
+
+- mdBook build passes; source/link check passes 18 pages and
+  558 internal links with no errors. Week 1 has 3,880 words,
+  generating one advisory length warning. The longer chapter
+  is intentional under the accepted clarity-first scope.
+  Week 2 has 2,810 words; Week 6 has 2,503.
+- Algorithm suite: 25,792 path/heuristic cases; 110,592 binary
+  CSP/partial-assignment cases for forward-check preservation;
+  6,561 game trees; 5,184 partition deltas. All pass.
+- Worked examples: 8,768 grounded SAT assignments, exact
+  forward-check domains, unit/repair SAT example, coloring,
+  partitioning, stochastic, courier, and schedule cases pass.
+  The named four-vertex, three-color graph gives 12 Boolean
+  variables, 28 clauses, and 12 models/colorings.
+- Extension checks pass: 4,096 bidirectional graphs and
+  9,477 RBFS graph/heuristic cases.
+- All 45 browser/view checks pass: desktop, 390px narrow,
+  and 200% text for fifteen reader-facing pages. Ten SVG
+  figures render with no broken images. Added screenshots
+  of quantified formulas and a navigation-overlap check.
+- Visually inspected all three new introductory diagrams,
+  graph-as-constraint-graph use, and grounded formulas in
+  narrow/enlarged views. Corrected one missing subpath
+  arrowhead by drawing the pathfinding edges separately.
+  Reserved desktop content gutters after enlarged-text
+  inspection exposed navigation arrows over formula text.
+  Final screenshots: /tmp/search-book-browser-HSwMBU;
+  browser-latest.json records the reproducible run.
+
+Finite checks are regression evidence, not general proofs.
+Weeks 1–2 are ready for Bart's next read. Other weeks remain
+first drafts awaiting full manual review. The user authorized
+committing this revision and all current notes; no push is
+requested or performed.

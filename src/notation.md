@@ -8,7 +8,8 @@ mean equality of all information relevant to future choices.
 | Symbol or term | Meaning |
 | --- | --- |
 | s, t | States; s₀ is an initial state. |
-| n | A search node, normally representing a path to a state. |
+| n (path search) | A node: a candidate record, often with path information. |
+| n (instance size) | The size measure specified for that analysis. |
 | successor | A state reachable by one legal transition. |
 | c(s,t) | Cost of a transition from s to t. |
 | g(n) | Cost of the path represented by node n. |
@@ -22,7 +23,7 @@ mean equality of all information relevant to future choices.
 | b | Branching factor in a simplified uniform-tree analysis. |
 | d | Depth of a shallowest goal. |
 | m | Maximum depth, when it exists. |
-| frontier / OPEN | Generated paths still eligible for expansion. |
+| frontier / OPEN | Generated nodes still eligible for expansion. |
 | expanded | A node whose successors have been considered. |
 | incumbent | Best complete feasible solution found so far. |
 | domain D(X) | Values still allowed for CSP variable X. |
@@ -57,9 +58,10 @@ neither a feasible answer nor a valid upper bound on the optimum.
 
 ## State, path and duplicate conventions
 
-A state describes a situation. A search node also describes
-how that situation was reached, including a parent link or
-other path record. There can be many nodes for one state.
+A state describes a possibility. A node is a record of one
+occurrence of that state during search. It can retain how
+the state was reached, including a parent link or other path
+information. There can be many nodes for one state.
 A path contains its sequence of transitions; its cost is the
 sum of their costs.
 

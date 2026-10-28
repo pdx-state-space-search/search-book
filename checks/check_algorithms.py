@@ -103,21 +103,25 @@ def check_path_search():
     return count
 
 
-def ac3(domains, relations):
-    ds = [set(x) for x in domains]
-    neighbors = {v: set() for v in range(len(ds))}
-    for a, b in relations:
-        neighbors[a].add(b)
-    queue = list(relations)
-    while queue:
-        a, b = queue.pop(0)
-        old = ds[a].copy()
-        ds[a] = {x for x in ds[a] if any((x, y) in relations[a, b] for y in ds[b])}
-        if ds[a] != old:
-            if not ds[a]:
-                return ds
-            queue += [(k, a) for k in neighbors[a] if k != b]
-    return ds
+def forward_check(domains, relations, assignment):
+    """Filter neighbors of assigned variables, without recursive propagation."""
+    reduced = [set(values) for values in domains]
+    for variable, value in assignment.items():
+        reduced[variable] &= {value}
+        if not reduced[variable]:
+            return None
+    for (a, b), allowed in relations.items():
+        if a not in assignment:
+            continue
+        if b in assignment:
+            if (assignment[a], assignment[b]) not in allowed:
+                return None
+        else:
+            reduced[b] = {value for value in reduced[b]
+                          if (assignment[a], value) in allowed}
+            if not reduced[b]:
+                return None
+    return reduced
 
 
 def check_constraints():
@@ -132,16 +136,29 @@ def check_constraints():
             arcs[b, a] = {(y, x) for x, y in allowed}
         solutions = [a for a in itertools.product(range(2), repeat=3)
                      if all((a[x], a[y]) in r for (x, y), r in arcs.items())]
-        reduced = ac3([range(2)] * 3, arcs)
-        assert all(all(a[v] in reduced[v] for v in range(3)) for a in solutions)
-        if all(reduced):
-            for (a, b), r in arcs.items():
-                assert all(any((x, y) in r for y in reduced[b]) for x in reduced[a])
-        count += 1
-    # Arc consistency does not decide satisfiability: 2-color a triangle.
+        for partial in itertools.product((None, 0, 1), repeat=3):
+            assigned = {v: value for v, value in enumerate(partial)
+                        if value is not None}
+            branch_solutions = [solution for solution in solutions
+                                if all(solution[v] == value
+                                       for v, value in assigned.items())]
+            reduced = forward_check([range(2)] * 3, arcs, assigned)
+            if reduced is None:
+                assert not branch_solutions
+            else:
+                assert all(all(solution[v] in reduced[v] for v in range(3))
+                           for solution in branch_solutions)
+                for (a, b), allowed in arcs.items():
+                    if a in assigned:
+                        assert all((assigned[a], value) in allowed
+                                   for value in reduced[b])
+            count += 1
+    # Forward checking initially sees no contradiction in a 2-color triangle.
     neq = {(0, 1), (1, 0)}
     arcs = {(a, b): neq for a in range(3) for b in range(3) if a != b}
-    assert all(ac3([range(2)] * 3, arcs))
+    assert forward_check([range(2)] * 3, arcs, {}) == [{0, 1}] * 3
+    assert forward_check([range(2)] * 3, arcs, {0: 0}) == [{0}, {1}, {1}]
+    assert forward_check([range(2)] * 3, arcs, {0: 0, 1: 1}) is None
     assert not any(all(a[x] != a[y] for x in range(3) for y in range(x))
                    for a in itertools.product(range(2), repeat=3))
     return count
@@ -203,7 +220,7 @@ def check_local_math():
 if __name__ == '__main__':
     checks = {
         'admissible path-search cases (A*, weighted A*, positive-cost IDA*)': check_path_search(),
-        'binary constraint networks (solution preservation and fixed point)': check_constraints(),
+        'binary CSP/partial-assignment cases (forward-checking preservation)': check_constraints(),
         'depth-three zero-sum game trees (alpha-beta versus minimax)': check_games(),
         'partition-move delta cases and stochastic arithmetic': check_local_math(),
     }

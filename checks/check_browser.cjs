@@ -64,7 +64,7 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
       for (const file of pages) {
         await send('Page.navigate',{url:pathToFileURL(path.join(root,'_build',file)).href});
         await delay(100);
-        const expr = '(async()=>{await document.fonts.ready; if(' + fontScale + '!==1){document.documentElement.style.fontSize=(parseFloat(getComputedStyle(document.documentElement).fontSize)*' + fontScale + ')+"px";} await Promise.all([...document.images].map(i=>i.complete?null:new Promise(r=>{i.onload=r;i.onerror=r})));return {title:document.querySelector("main h1")?.textContent,overflow:document.documentElement.scrollWidth>innerWidth+2,brokenImages:[...document.images].filter(i=>!i.naturalWidth).length,bodyWidth:document.documentElement.scrollWidth,width:innerWidth,mainFont:getComputedStyle(document.querySelector("main")).fontSize}})()';
+        const expr = '(async()=>{await document.fonts.ready; if(' + fontScale + '!==1){document.documentElement.style.fontSize=(parseFloat(getComputedStyle(document.documentElement).fontSize)*' + fontScale + ')+"px";} await Promise.all([...document.images].map(i=>i.complete?null:new Promise(r=>{i.onload=r;i.onerror=r})));const mainBounds=document.querySelector("main").getBoundingClientRect(); const navOverlap=[...document.querySelectorAll(".nav-wide-wrapper .nav-chapters")].some(a=>{const b=a.getBoundingClientRect();return b.width>0&&b.height>0&&b.right>mainBounds.left+2&&b.left<mainBounds.right-2}); return {navOverlap,title:document.querySelector("main h1")?.textContent,overflow:document.documentElement.scrollWidth>innerWidth+2,brokenImages:[...document.images].filter(i=>!i.naturalWidth).length,bodyWidth:document.documentElement.scrollWidth,width:innerWidth,mainFont:getComputedStyle(document.querySelector("main")).fontSize}})()';
         const r = await send('Runtime.evaluate',{expression:expr,awaitPromise:true,returnByValue:true});
         if(r.exceptionDetails) throw Error(JSON.stringify(r.exceptionDetails));
         const v = r.result.value;
@@ -80,9 +80,15 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
           await send('Runtime.evaluate',{expression:'document.querySelectorAll("main img, main pre, main table")['+i+'].scrollIntoView({block:"center"})'});
           await screenshot('content-'+i);
         }
+        const quantified = '[...document.querySelectorAll("main p > strong")].filter(p=>/[∀∃]/.test(p.textContent))';
+        const formulas = await send('Runtime.evaluate',{expression:quantified+'.length',returnByValue:true});
+        for (let i=0; i<formulas.result.value; i++) {
+          await send('Runtime.evaluate',{expression:quantified+'['+i+'].scrollIntoView({block:"center"})'});
+          await screenshot('quantified-'+i);
+        }
       }
     }
-    const failures=results.filter(r=>!r.title||r.overflow||r.brokenImages);
+    const failures=results.filter(r=>!r.title||r.overflow||r.brokenImages||r.navOverlap);
     // Render every original figure at a legible size for label inspection.
     const figures = (await fs.readdir(path.join(root,'_build','figures'))).filter(n=>n.endsWith('.svg')).sort();
     const sheet = path.join(tmp,'figures.html');

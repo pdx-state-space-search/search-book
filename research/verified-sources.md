@@ -97,3 +97,29 @@ chapter 3 as “Solving Problems by Searching”:
 https://aima.cs.berkeley.edu/
 Its editions page identifies the edition as 2020:
 https://aima.eecs.berkeley.edu/translations.html
+
+## Week 2 and SAT repair readings — 2026-10-27 Pacific
+
+- Edward P.K. Tsang, Foundations of Constraint Satisfaction,
+  Academic Press, 1993. Author's page confirms the original
+  publication and distinguishes the corrected 2014 reprint:
+  https://www.bracil.net/edward/FCS.html
+  The page is a metadata/scope check, not access to the book.
+- James M. Crawford and Larry D. Auton, Experimental Results
+  on the Crossover Point in Satisfiability Problems, AAAI-93,
+  pp. 21–27. Primary conference PDF:
+  https://cdn.aaai.org/AAAI/1993/AAAI93-004.pdf
+  Checked metadata and selected TABLEAU/experiment passages.
+  The final printed page is 27; corrected an initially supplied
+  21–26 range. The annotated reading distinguishes the paper's
+  random-SAT crossover from a fixed-budget growth illustration.
+- Bart Selman, Henry A. Kautz, Bram Cohen, Noise Strategies
+  for Improving Local Search, AAAI-94, pp. 337–343:
+  https://cdn.aaai.org/AAAI/1994/AAAI94-051.pdf
+  Checked metadata and selected SAT local-search/noise passages.
+  Used in Week 6's annotated reading, not the introductory SAT
+  list. The chapter describes the WalkSAT family rather than
+  reproducing a specific original implementation listing.
+
+These checks do not claim comprehensive audits of the works.
+No source prose, figures, or algorithm listings were adapted.

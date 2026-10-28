@@ -4,13 +4,13 @@
 
 # The ten weeks
 
-- [Models and Foundations](01-models.md)
+- [Models, States, and Problems](01-models.md)
 - [Constraints and SAT](02-constraints.md)
 - [Systematic Search](03-systematic.md)
 - [Best-First Search](04-best-first.md)
-- [Heuristics and Memory](05-heuristics.md)
-- [Local Search](06-local.md)
-- [Stochastic Search and Evaluation](07-stochastic.md)
+- [Heuristics and Limited Memory](05-heuristics.md)
+- [Local Search and Repair](06-local.md)
+- [Stochastic Search and Anytime Optimization](07-stochastic.md)
 - [Engineering Search](08-engineering.md)
 - [Adversarial Search](09-adversarial.md)
 - [Beyond the Basics](10-frontiers.md)

@@ -3,67 +3,73 @@
 ## Instructor review and revision in progress
 
 Latest revision: 2026-10-27 Pacific. All ten chapters have a
-first draft. Manual instructor review has begun; the book
-continues through substantive authoring and revision.
-The built mdBook is at [_build/index.html](_build/index.html).
+first draft. The introduction and Weeks 1–2 have been revised
+from BOOK-NOTES.md and follow-up discussion. The book remains
+in substantive authoring and instructor review.
+Read the built version at [_build/index.html](_build/index.html).
 
-The introduction and Week 1 were rewritten from BOOK-NOTES.md
-and the subsequent discussion. They now center feasibility,
-candidate optimization, and pathfinding within a broader
-account of exploring possibilities. Week 1 connects search
-space growth to practical resource limits and NP-hardness,
-and separates objective value from computational effort.
+Week 1 now illustrates graph coloring, number partitioning,
+and pathfinding, and introduces problems, instances, and
+classes informally. It defines size measures and explains
+node counts through candidate records and per-node work.
+Week 2 supplies the main SAT foundation, including CNF and
+finite quantified shorthand with explicit grounded expansion.
+AC-3 has been removed, not postponed to another chapter.
+Forward checking and unit propagation provide the deduction
+examples. Week 6 introduces SAT repair and WalkSAT.
 
-The authors are ChatGPT and Bart Massey, credited together
-in the opening title block and metadata. A closing Epilogue
-is reserved for history and authorship discussion. The
-reader attribution and reuse credit match. The NP/hardware history
-claim is deliberately deferred until sources are verified.
+The authors remain ChatGPT and Bart Massey, credited in the
+opening title block and metadata. The closing Epilogue is
+reserved for history and authorship. The proposed early-AI
+hardware history remains deferred until sources are verified.
 
 ## Current draft and remaining work
 
-- Introduction and Week 1: revised, awaiting Bart's next read.
-- Weeks 2–10: first drafts, awaiting manual instructor review
-  and any resulting authoring changes.
-- Eight original teaching figures, including the new Week 1
-  growth/budget plot.
-- Week 1 is about 3,300 words; other chapters remain about
-  2,100–2,500 words. Length follows teaching needs.
+- Introduction and Weeks 1–2: revised, awaiting Bart's read.
+- Weeks 3–10: first drafts awaiting manual instructor review;
+  Week 6 has a short SAT local-search addition.
+- Ten original teaching figures. The three introductory
+  diagrams include the graph reused as a CSP constraint graph.
+- Week 1 is about 3,900 words; Week 2 about 2,800. Other
+  chapters are about 2,100–2,500. Length follows teaching needs.
 - Exercises and instructor solutions remain outside scope.
-- Epilogue: section reserved; history/authorship text awaits
-  a later authoring pass.
+- Epilogue: history/authorship discussion reserved for later.
 
-The earlier text of the introduction and Week 1 is preserved
-in research/revisions/ for comparison. BOOK-NOTES.md remains
-unchanged. No syllabus/archive material was modified, and
-no student submissions or grading records were read.
-Local repository creation and an initial commit are authorized
-at Bart's request. Pushes require separate explicit permission.
+BOOK-NOTES.md is preserved as Bart edited it. Prior text is
+recoverable from Git and the earlier revision snapshots.
+No syllabus/archive material was changed, and no student
+submissions or grading records were read. Local commits are
+made only when explicitly requested; pushes require separate
+permission.
 
 ## Current validation
 
-The revised mdBook builds. The source/generated-link check
-passes: 18 HTML pages, 548 checked internal links, no errors
-or warnings. The worked-example suite passes, including new
-Week 1 coloring/partition enumeration and growth arithmetic.
-The independent revision review found no must-fix defects;
-see research/review-2026-10-27-week1.md.
+mdBook builds. The source/link check reports 18 HTML pages,
+558 internal links, and no errors. All weekly contents labels
+now agree with the chapter titles, with a regression check.
+There is one advisory word-count warning for Week 1's 3,880
+words; the longer explanation follows the accepted revision
+scope rather than a fixed word target.
 
-All 45 browser/view checks pass, covering the ten chapters, introduction,
-reference pages, and Epilogue at desktop, narrow, and 200%
-text settings. Manual inspection confirmed the new growth
-figure's labels and sampled revised pages. Images are now
-centered to keep the growth axis clear of navigation arrows
-at enlarged text settings. See research/review-log.md.
-The historical full-book algorithm checks are recorded in
-research/final-validation.md. Those finite checks are
-regression evidence rather than general proofs. Instructor
-review of explanation depth and teaching choices continues.
+The algorithm suite passes, including 110,592 forward-checking
+CSP/partial-assignment cases. The example suite passes 8,768
+SAT ground assignments, exact forward-checking domains, SAT
+unit/repair examples, and the other retained examples.
+The memory-bounded/bidirectional extension suite also passes.
+These are finite regression checks, not general proofs.
+
+The revision review checked encodings, counts, figures, and
+beginner exposition. Its citation-page correction and clarity
+suggestions were integrated; see
+research/review-2026-10-27-chapter2.md. All 45 browser/view
+checks pass, including navigation-overlap checks at enlarged
+text sizes. The new figures and grounded formulas were
+visually inspected; details are in research/review-log.md.
 
 ## Continuing
 
-Use this status, BOOK-NOTES.md, and research/review-log.md for
-the current authoring state. BRIEF.md records the scope and
-newer editorial decisions. The handoff and 2026-10-22
-validation retain the earlier first-draft checkpoint; their
-campaign-complete wording does not mean the book is finished.
+Use this status, BOOK-NOTES.md, BRIEF.md, and the latest
+research/review-log.md entry for current authoring decisions.
+Older completion statements refer to the first-draft milestone,
+not completion of all book authoring. The 2026-10-22 validation
+retains the earlier AC-3 evidence as historical material only.

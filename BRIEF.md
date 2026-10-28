@@ -34,7 +34,8 @@ programming, but little prior AI/search knowledge.
 - Use repeated examples where useful: weighted directed graphs,
   sliding tiles, graph coloring, number partitioning, small games.
 - Do not read or reuse student submissions or grading records.
-- Never modify syllabus/archive materials. Never commit or push.
+- Never modify syllabus/archive materials. Commit only when
+  explicitly requested; pushes require separate permission.
 
 ## Chapter allocation
 
@@ -81,3 +82,33 @@ discussion of the book's history and authorship. This
 supersedes the earlier role-based credit wording.
 A complete first draft does not imply that instructional
 authoring and revision are finished.
+
+## Review through Week 2 — 2026-10-27 Pacific
+
+Assume only basic CS and concepts already explained here.
+Introduce notation through concrete choices, name a problem
+when returning to its example, and use diagrams and added
+explanation where they help. Use graph coloring consistently
+after explicitly relating it to map coloring.
+
+Discuss a problem informally as a collection of parameter
+instantiations, an instance as particular parameter choices,
+and a class as a collection of problems with a stated
+property. Defer full formal problem descriptions to an
+algorithms textbook. Define what n measures before discussing
+growth in n. Explain nodes as candidate records and node
+counts as a machine-independent work measure, with the usual
+polynomial-per-node assumption stated and qualified.
+
+Week 2 supplies the main SAT foundation: propositions,
+literals, CNF, finite quantified shorthand and grounded
+expansion, encoding correctness, backtracking, variable/value
+ordering, forward checking, and unit propagation. Quantifier
+indices range over explicit finite sets; this is not a new
+QBF topic. Omit AC-3 entirely for now, including Week 10.
+Name most-constrained-first and least-constraining-first.
+
+Readings include Tsang and Crawford–Auton on TABLEAU.
+WalkSAT belongs in the local-search week. All contents
+labels should agree with chapter titles. Longer chapters
+are acceptable when the extra material supplies clarity.

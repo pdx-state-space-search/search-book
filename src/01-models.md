@@ -49,13 +49,28 @@ correctness.
 Three small examples will give these ideas concrete forms.
 We will return to them throughout the book.
 
-### Finding a feasible assignment
+### Graph coloring: finding a feasible assignment
 
-Color four regions A, B, C, and D using red, green, or blue.
-The bordering pairs are AB, AC, BC, and CD. Each bordering
-pair must receive different colors. A **constraint** states
-a requirement on permitted combinations of choices.
-A **feasible** assignment satisfies every constraint.
+Map coloring gives a familiar motivation: neighboring
+regions must have different colors. Represent each region
+by a vertex and each shared border by an edge. The resulting
+**graph coloring** problem assigns colors to vertices so
+that each edge has differently colored endpoints. We will
+use this graph representation throughout the book.
+
+Take four vertices A, B, C, and D, with edges AB, AC, BC,
+and CD, and allow red, green, or blue. A **constraint** states
+a requirement on permitted combinations of choices; here
+each edge requires different endpoint colors. A **feasible**
+assignment satisfies every constraint.
+
+[![A graph with edges AB, AC, BC, and CD has A red, B green, C blue, and D red. Every edge joins different colors.](figures/graph-coloring.svg)](figures/graph-coloring.svg)
+
+*This graph coloring is feasible. A and D may share red
+because there is no edge between them.*
+
+An **assignment** gives colors to vertices; a **partial
+assignment** leaves some vertices uncolored.
 
 Start with no colors assigned. Choosing A=red and B=red
 already violates AB. No choice for C or D can repair that
@@ -67,10 +82,10 @@ complete feasible answer.
 We need the final assignment; the order in which the solver
 assigned the colors is usually irrelevant to its validity.
 That order still matters to the effort needed to find it.
-Starting with strongly interacting regions may expose
-conflicts earlier than assigning isolated regions first.
+Starting with strongly interacting vertices may expose
+conflicts earlier than assigning isolated vertices first.
 
-### Improving a complete candidate
+### Number partitioning: improving a complete candidate
 
 Divide weights 8, 7, 6, 5, and 4 into two groups. Minimize
 an **objective**, the absolute difference between their
@@ -79,6 +94,11 @@ candidate with sums 17 and 13, giving objective value 4.
 The partition A={6,5,4}, B={7,8} has sums 15 and 15,
 giving value zero. Because an absolute difference cannot be
 negative, the second candidate is optimal.
+
+[![Two number partitions of weights 8, 7, 6, 5, and 4. Groups with sums 17 and 13 have imbalance 4; groups with sums 15 and 15 have imbalance zero.](figures/number-partitioning.svg)](figures/number-partitioning.svg)
+
+*The objective in number partitioning measures the difference
+between group sums. Both pictured partitions are feasible.*
 
 Here every division of the items is feasible. A more
 constrained version could limit each group's capacity or
@@ -93,14 +113,20 @@ complete partitions. Either way, the objective evaluates
 the partition it returns. The sequence of exploratory
 changes need not be part of that answer.
 
-### Finding a route
+### Pathfinding: finding a route
 
+In **pathfinding**, an answer is a path through a network.
 Suppose S has a direct road to G costing 20, and another
 route S→A→G with each road costing 1. Reaching G supplies a
 route, but the direct road is more expensive than the
 route through A. If we minimize travel cost, the desired
 answer includes the sequence of roads and its total cost.
 Merely reporting the final location G loses the answer.
+
+[![In a directed pathfinding graph, S leads directly to G with cost 20, or through A using two edges of cost 1 each.](figures/pathfinding.svg)](figures/pathfinding.svg)
+
+*The two-edge path S→A→G costs 2; the one-edge path S→G
+costs 20. Fewest edges and lowest cost are different goals.*
 
 These tasks ask for different objects: an assignment, a
 partition, and a path. Each has possibilities to explore,
@@ -111,8 +137,8 @@ identifying those features.
 ## Models, states, and instances
 
 A **model** specifies the choices, restrictions, and outcomes
-relevant to a task. For coloring, it names regions, available
-colors, and bordering pairs. For partitioning, it lists
+relevant to a task. For graph coloring, it names vertices,
+available colors, and edges. For number partitioning, it lists
 weights and defines the imbalance. For scheduling, it may
 specify task durations, machines, and precedence rules.
 
@@ -125,8 +151,8 @@ other states defines how we can explore that space.
 The state space depends on the solver's design. A
 constructive coloring search can start with an empty
 assignment and generate children by assigning the next
-region. A repair search can start with every region colored
-and generate neighbors by recoloring one region. The repair
+vertex. A repair search can start with every vertex colored
+and generate neighbors by recoloring one vertex. The repair
 space includes assignments violating the constraints: those
 are candidates to improve, and cannot yet be returned as
 feasible answers. A model's feasibility requirements and
@@ -141,13 +167,6 @@ naturally. In an assignment search, a transition may instead
 mean making an additional decision. It need not describe
 an action to perform in the world.
 
-An **instance** is one specified member of a problem family.
-Three-coloring is a family; a particular graph with three
-available colors is an instance. Number partitioning is a
-family; our five weights form an instance. A complexity
-classification concerns a family as inputs grow, while a
-solver run concerns the instance supplied to it.
-
 Models deliberately simplify. A schedule may ignore setup
 time between tasks. If setup time affects feasibility or
 completion time, a solver can correctly optimize its model
@@ -155,22 +174,53 @@ and still return a poor real schedule. The first question
 about an implementation is whether it explores the intended
 possibilities and judges answers by the intended rules.
 
+### Problems, instances, and classes
+
+A **problem** describes a task with parameters that can
+vary. Graph coloring specifies what to find, while leaving
+the graph and available colors to be supplied. An
+**instance** fixes those parameters: for example, our graph
+with edges AB, AC, BC, CD and its three allowed colors.
+Changing the graph or color choices gives another instance.
+
+Think of the problem as the collection of allowed
+instantiations of its parameters. This includes instances
+with feasible answers and instances without them. In number
+partitioning, the weights are parameters; our five weights
+specify one instance of that problem. A search run tackles
+one instance, not the entire collection at once.
+
+A **complexity class** groups problems according to their
+computational resource requirements. P and NP, introduced
+below, are examples. Keep the levels separate: an instance
+supplies particular data; a problem collects instances of
+one task; a class collects problems with a stated
+computational property. An algorithms textbook provides
+the fuller formal treatment of these ideas.
+
 ## Growth and the practical limit
 
-Assigning one of k values to each of n variables gives kⁿ
-complete assignments before applying constraints. With
-three colors and four regions there are 3⁴=81 assignments.
-With twenty regions there are 3²⁰=3,486,784,401. A compact
+Return to graph coloring. If n is the number of vertices
+and k is the number of available colors, there are kⁿ
+complete assignments before applying edge constraints. Our
+four-vertex, three-color instance has 3⁴=81 assignments.
+With twenty vertices there are 3²⁰=3,486,784,401. A compact
 instance can describe billions of possible answers.
 
 A constructive search makes this growth visible as a tree.
+Each node in this picture represents a record for a candidate
+considered by the solver, such as a partial graph coloring. Its
+children represent the next choices to consider. Counting
+the nodes counts work on those candidates; the solver need
+not construct or store the whole tree.
+
 If each node has exactly b children, the total number of
 nodes through depth d, counting the root at depth zero, is
 
 **1 + b + b² + … + bᵈ = (b^(d+1) − 1)/(b − 1), for b>1.**
 
 In a fixed-order coloring search, depth d means that d
-regions have been assigned. Each unconstrained choice has
+vertices have been assigned. Each unconstrained choice has
 three children. The leaves count complete assignments;
 internal nodes count partial assignments examined along
 the way. Pruning a partial assignment can remove an entire
@@ -180,7 +230,7 @@ Consider the simpler binary tree, with b=2. At an
 illustrative constant rate of one million nodes per second,
 exhausting the tree takes approximately:
 
-| Depth | Nodes through that depth | Time |
+| Depth | Total nodes examined | Time |
 | ---: | ---: | ---: |
 | 20 | 2,097,151 | 2.1 seconds |
 | 30 | 2,147,483,647 | 35.8 minutes |
@@ -216,27 +266,30 @@ factor of roughly a million. Memory, expensive state
 operations, and uneven branching can impose earlier limits.
 
 Depth measures decisions in the chosen search representation.
-It need not equal encoded input size. Choosing one of three
-colors for each region relates depth directly to region
-count; partitioning input also includes the bits needed to
-write each weight. Changing the representation can change
-branching, depth, and the work done at each node.
+It need not equal the chosen measure of instance size. In
+graph coloring with a fixed vertex order, each decision
+colors one more vertex. Other representations can change
+branching, depth, and the work done per node.
 
 ### NP-hard families and solvable instances
 
 Why focus on NP-hard problems? They capture the central
 challenge of seeking practical solutions to problems for
 which efficient general methods are not known. Complexity
-theory makes that statement more precise by measuring
-resources as a function of input length.
+theory studies resources as a function of instance size.
+Before discussing difficulty in terms of n, always define
+what n measures. It might count graph vertices, variables,
+items, or bits in an input representation. A statement
+about growth in n is incomplete until that choice is clear.
 
 **P** consists of decision problems solvable in polynomial
 time. A decision problem asks a yes-or-no question, such as
 whether a graph can be colored with three colors.
-**NP** consists of decision problems whose yes-instances
-have polynomial-length certificates checkable in polynomial
-time. A proposed coloring is a certificate: check that each
-vertex has an allowed color and every edge has differently
+**NP** consists of decision problems for which a yes answer
+can be supported by a polynomial-length certificate checked
+in polynomial time. A proposed graph coloring is a
+certificate: check that each vertex has an allowed color
+and every edge has differently
 colored endpoints. Being in NP describes verification;
 it does not by itself imply hardness.
 
@@ -280,17 +333,31 @@ keep three meanings separate:
 
 | Quantity | Examples | What it measures |
 | --- | --- | --- |
-| Objective value | Partition imbalance, schedule makespan | Quality of a candidate |
+| Objective value | Partition imbalance, schedule length | Quality of a candidate |
 | Path cost | Sum of road travel costs | Quality of a route or action sequence |
 | Search effort | Nodes examined, seconds, peak memory | Resources used by the solver |
 
-Path cost is one possible objective. In our route example,
+Path cost is one possible objective. In pathfinding,
 the two-edge path costs 2 regardless of how many other
-routes the solver investigated first. For our partition,
+routes the solver investigated first. In number partitioning,
 imbalance zero is optimal regardless of how many item moves
 or partial assignments led the solver to discover it.
 Charging one unit per exploratory move would define a
 different optimization problem.
+
+A node count is a machine-independent measure of search
+work under a specified counting rule. For a fixed algorithm
+and ordering, changing processor speed changes elapsed time
+without changing the number of candidates it considers.
+This makes counts useful for comparing search policies and
+understanding growth beyond one particular machine.
+
+The usual analysis assumes polynomial-time work per node
+in the chosen instance-size measure n. If N nodes are
+examined and all work charged to each node is bounded by
+a polynomial p(n), total time is O(N·p(n)). This must include
+generating successors and evaluating estimates; an expensive
+inner search cannot be hidden inside a cheap node operation.
 
 Search effort depends on both how much work is selected and
 how much each operation costs. Two solvers can examine the
@@ -308,12 +375,17 @@ few of them. Reporting both counts can expose work hidden
 by a single headline number. [Week 8](08-engineering.md)
 returns to representation and measurement in detail.
 
-## States, nodes, paths, and history
+## States, records, and paths
 
-A **search node** is a record of an occurrence of a state in
-the exploration, often with a parent, depth, and information
-needed by the algorithm. A **path** records a sequence of
-transitions. Several nodes can represent the same state.
+The solver operates on records: it creates a candidate,
+checks it, retains information about it, and generates
+further candidates from it. We call such a record a
+**node**. A node can contain a state, a link to the record
+that produced it, and other information the algorithm needs.
+The tree draws the relationships between these records;
+visiting a node means processing its record. A **path**
+records a sequence of transitions. Several nodes can
+represent the same state.
 
 Suppose an assignment search permits choosing variables in
 either order. Assigning A=red then B=green reaches the same
@@ -374,11 +446,11 @@ must be considered together.
 
 An **explicit graph** stores its vertices and edges directly.
 Search often uses an **implicit graph**: represent a state
-and generate its successors only when needed. In coloring,
-generate extensions of the current assignment. In
-partition repair, generate transfers or exchanges of items.
-In a sliding-tile puzzle, generate boards obtained by moving
-a tile into the blank.
+and generate its successors only when needed. In graph
+coloring, generate extensions of the current assignment.
+In number partitioning, generate other partitions by
+transferring an item between groups. In pathfinding,
+generate the locations reachable by one outgoing edge.
 
 This avoids first listing an enormous space, but places a
 correctness obligation on the generator. Missing choices
@@ -418,7 +490,8 @@ bound L establishes L≤C*. Together they give
 
 **L ≤ C* ≤ U.**
 
-Our partition with imbalance 4 supplies U=4. Nonnegativity
+In number partitioning, the partition with imbalance 4
+supplies U=4. Nonnegativity
 supplies L=0. Finding the balanced partition makes U=0,
 proving optimality because the bounds meet. A constraint
 optimization solver can return a useful feasible answer

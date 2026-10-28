@@ -12,4 +12,12 @@
 .content figure { margin: 1.8em 0; }
 .content figcaption { font-size: .92em; }
 .content a { text-underline-offset: .15em; }
+@media (min-width: 1081px) {
+  .content { padding-inline: 100px; }
+}
+@media (min-width: 1081px) and (max-width: 1380px) {
+  #mdbook-sidebar-toggle-anchor:checked ~ .page-wrapper .content {
+    padding-inline: 5px;
+  }
+}
 @media (max-width: 600px) { .content main { font-size: 1.7rem; } }

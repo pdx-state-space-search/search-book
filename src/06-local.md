@@ -76,9 +76,10 @@ that the application needs to consider.
 
 ## A repair trace for graph coloring
 
-Use four vertices A, B, C, D and edges AB, AC, BC, CD. Three
-colors suffice. Let E count conflicting edges: an edge is in
-conflict when its endpoints share a color.
+Return to the graph coloring instance from Weeks 1 and 2:
+vertices A, B, C, D and edges AB, AC, BC, CD, with three
+available colors. Let E count conflicting edges: an edge is
+in conflict when its endpoints share a color.
 
 Start with every vertex red. All four edges conflict, so
 E=4. A **min-conflicts** move selects a conflicted vertex
@@ -110,6 +111,36 @@ satisfying assignment has inexpensive local repairs. Strong
 dependencies can instead make repairs interfere. There is no
 queue of unexplored branches proving that all alternatives
 will eventually be considered.
+
+## SAT as local search
+
+For the SAT formulas introduced in [Week 2](02-constraints.md),
+a complete candidate gives every Boolean variable a truth
+value. Let E count unsatisfied clauses. A move flips one
+variable from true to false or from false to true. A score
+of zero supplies a satisfying assignment.
+
+For example, return to (p∨q)∧(¬p∨r)∧¬q. The assignment
+p=false, q=false, r=false violates only p∨q, so E=1.
+Flipping p makes that clause true but makes ¬p∨r false:
+E remains 1. Flipping r next satisfies every clause,
+giving E=0. The first move is sideways on this objective,
+although it changes which clause is violated.
+
+**WalkSAT** focuses on the violated part of a CNF formula.
+It chooses an unsatisfied clause and flips a variable from
+that clause. Flipping such a variable satisfies the selected
+clause but can break other clauses. WalkSAT policies combine
+preferences for flips that break few clauses with randomized
+choices that help escape stalled regions. The precise
+selection, tie-breaking, and noise rules define the variant.
+
+This is a repair process over complete assignments, whereas
+Week 2's backtracking extends and undoes partial assignments.
+Both can find satisfying assignments. An unsuccessful
+time-limited WalkSAT run does not establish unsatisfiability;
+it has not accounted for all alternatives. Keep failures and
+budgets visible when evaluating the method in Week 7.
 
 ## A checkable local minimum
 
@@ -310,6 +341,11 @@ how to evaluate the resulting variation from run to run.
   (1992). The central repair idea and its scheduling context.
 - Glover, [“Tabu Search—Part I”](https://doi.org/10.1287/ijoc.1.3.190)
   (1989). A primary account of memory-based trajectory control.
+- Selman, Kautz, and Cohen,
+  [“Noise Strategies for Improving Local Search”](https://cdn.aaai.org/AAAI/1994/AAAI94-051.pdf)
+  (AAAI-94, pp. 337–343). Develops randomized SAT repair
+  strategies associated with WalkSAT, connecting clause
+  violations, local choices, and escape from local minima.
 - Korf, [“A Complete Anytime Algorithm for Number
   Partitioning”](https://web.cecs.pdx.edu/bart/cs510cs/papers/korf-ckk.pdf)
   (1998). A useful contrast: a heuristic partitioning idea

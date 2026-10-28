@@ -43,7 +43,7 @@ with plt.rc_context({'font.family': 'DejaVu Sans',
                     fontsize=12, color=color,
                     arrowprops={'arrowstyle': '-', 'color': color})
     ax.set(xlim=(0, 20), ylim=(0, 1_650_000),
-           xlabel='Search depth (decisions)', ylabel='Total search nodes')
+           xlabel='Search depth (decisions)', ylabel='Total nodes examined')
     ax.set_xticks(range(0, 21, 2))
     ax.set_yticks([0, 500_000, 1_000_000, 1_500_000])
     ax.yaxis.set_major_formatter(FuncFormatter(

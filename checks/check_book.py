@@ -14,6 +14,12 @@ warnings = []
 chapters = sorted(SRC.glob('[0-9][0-9]-*.md'))
 if len(chapters) != 10:
     errors.append(f'Expected ten chapters, found {len(chapters)}')
+for label, name in re.findall(r'^- \[([^\]]+)\]\((\d\d-[^)]+\.md)\)',
+                              (SRC / 'SUMMARY.md').read_text(), re.M):
+    headings = re.findall(r'^# (.+)$', (SRC / name).read_text(), re.M)
+    title = re.sub(r'^Week \d+:\s*', '', headings[0]) if headings else ''
+    if label != title:
+        errors.append(f'{name}: contents label {label!r} differs from title {title!r}')
 words = {}
 for chapter in chapters:
     text = chapter.read_text()

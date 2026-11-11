@@ -38,6 +38,8 @@ A **constraint satisfaction problem**, or CSP, consists of
 variables, their domains, and constraints. A solution is a
 complete assignment satisfying every constraint. Here we
 consider finite sets of variables with finite domains.
+See [Tsang (1993)](bibliography.md#tsang-1993) for the general
+CSP framework.
 The notation X₁, …, Xₙ names n variables, and D(X) denotes
 the domain of variable X. The notation packages choices
 we can already describe in words.
@@ -120,42 +122,70 @@ has any satisfying truth assignment. A solver either finds
 one or establishes that none exists. We will use CNF so
 that each clause states one explicit requirement.
 
+Choosing CNF does not restrict SAT to formulas that happen
+to be written this way. A **Tseitin encoding** introduces
+auxiliary Boolean variables for subformulas, adds clauses
+relating each to its parts, and requires the variable for
+the whole formula to be true. With size measured by variable
+and connective occurrences, this constructs a CNF in linear
+time with only linear growth in size. The new formula is
+**equisatisfiable**: it has a satisfying assignment exactly
+when the original does. Projecting an encoded solution onto
+the original variables recovers an original solution.
+This is different from demanding a logically equivalent CNF
+using only the original variables, which can require
+exponential growth. See
+[Junttila's CNF translations](bibliography.md#junttila-2023)
+for the construction.
+
+Many applications have compact Boolean descriptions built
+from local rules or circuit operations; these can therefore
+have compact CNF encodings even when the space of possible
+assignments is enormous. Compact describes the representation,
+not the effort needed to solve it. A small CNF can still
+describe a difficult search.
+
 ## Encoding graph coloring as SAT
 
-Return to graph coloring, now with a triangle A, B, C and
-only red and blue available. Introduce Boolean variables
-r_A, r_B, and r_C. The statement r_A means "vertex A is red."
+For a new graph coloring instance, use a triangle A, B, C
+with only red and blue available. Introduce Boolean variables
+r<sub>A</sub>, r<sub>B</sub>, and r<sub>C</sub>. The statement r<sub>A</sub> means "vertex A is red."
 True means red; false means blue. This interpretation works
 because there are exactly two color choices.
 
-For edge AB, the clause r_A∨r_B rules out both endpoints
-being blue. The clause ¬r_A∨¬r_B rules out both being red.
+For edge AB, the clause r<sub>A</sub>∨r<sub>B</sub> rules out both endpoints
+being blue. The clause ¬r<sub>A</sub>∨¬r<sub>B</sub> rules out both being red.
 Together the two clauses express different endpoint colors:
 
-**(r_A ∨ r_B) ∧ (¬r_A ∨ ¬r_B).**
+**(r<sub>A</sub> ∨ r<sub>B</sub>) ∧ (¬r<sub>A</sub> ∨ ¬r<sub>B</sub>).**
 
 We need the same pair of clauses for every edge. In a
-compact formula, let U and V stand for vertex names and
-let E be the finite edge set {AB, BC, CA}:
+compact formula, let u and v stand for the endpoints of an
+edge, and let E be the finite edge set {AB, BC, CA}:
 
-**∀ edge UV∈E: (r_U ∨ r_V) ∧ (¬r_U ∨ ¬r_V).**
+<p class="formula">
+<span class="formula-prefix">∀ uv ∈ E:</span>
+<span>(r<sub>u</sub> ∨ r<sub>v</sub>)</span>
+<span>∧ (¬r<sub>u</sub> ∨ ¬r<sub>v</sub>).</span>
+</p>
 
 The symbol ∀ means "for every." Here it abbreviates a
 finite conjunction: write the body once for AB, once for
 BC, and once for CA, and join those copies with ∧. This
 **grounded expansion** substitutes actual vertex names for
-U and V. The indexed name r_U becomes r_A when U=A;
+u and v. The indexed name r<sub>u</sub> becomes
+r<sub>A</sub> when u=A;
 it names a Boolean variable, rather than adding another
 unknown color or another kind of truth value.
 
 | Edge | Clauses produced by expansion |
 | --- | --- |
-| AB | (r_A ∨ r_B), (¬r_A ∨ ¬r_B) |
-| BC | (r_B ∨ r_C), (¬r_B ∨ ¬r_C) |
-| CA | (r_C ∨ r_A), (¬r_C ∨ ¬r_A) |
+| AB | (r<sub>A</sub> ∨ r<sub>B</sub>), (¬r<sub>A</sub> ∨ ¬r<sub>B</sub>) |
+| BC | (r<sub>B</sub> ∨ r<sub>C</sub>), (¬r<sub>B</sub> ∨ ¬r<sub>C</sub>) |
+| CA | (r<sub>C</sub> ∨ r<sub>A</sub>), (¬r<sub>C</sub> ∨ ¬r<sub>A</sub>) |
 
 The expanded CNF has three Boolean variables and six
-clauses. With r_A=true, r_B=false, r_C=true, the first
+clauses. With r<sub>A</sub>=true, r<sub>B</sub>=false, r<sub>C</sub>=true, the first
 two edges are satisfied but CA is violated. In fact there
 is no satisfying assignment: making A red forces B blue
 and C red, contradicting CA. Making A blue gives the
@@ -213,7 +243,9 @@ and the edge clauses ensure a proper coloring. Missing an
 at-most-one or edge constraint can admit invalid answers;
 adding an unintended restriction can exclude valid ones.
 
-SAT is an NP-complete decision problem. Many useful
+SAT is an NP-complete decision problem; see
+[Karp (1972)](bibliography.md#karp-1972) for its role in the
+reduction framework. Many useful
 instances still admit practical solutions, as discussed in
 Week 1. Encoding an application as SAT lets us use an
 existing solver. A specialized CSP solver may instead work
@@ -228,7 +260,8 @@ tries a value, and continues recursively. If the choice
 violates a constraint or deductions produce an empty domain,
 it rejects that branch. If every value for the selected
 variable fails, it returns to an earlier choice. This is
-**backtracking**.
+**backtracking**; see [Tsang (1993)](bibliography.md#tsang-1993)
+for this framework and the ordering rules below.
 
 Here n denotes the number of variables and k an upper bound
 on each domain's size. There are at most kⁿ complete
@@ -238,17 +271,20 @@ constraint, there is no reason to extend them through the
 remaining eighteen variables. Rejecting partial assignments
 is the source of much of backtracking's practical power.
 
-For finite domains, backtracking is complete if it eventually
-tries every relevant value, restores branch state correctly,
-and prunes only branches with no solution. Ordering rules
-change which branches are reached first. Sound deductions
-can remove branches that need never be reached. These
-contribute to performance in different ways.
+With finite domains and a fixed variable order, enumerating
+all assignments and their prefixes is complete and systematic
+on that assignment tree: every state is examined once.
+Backtracking normally prunes inconsistent prefixes, leaving
+many states in that tree unexamined. It can nevertheless
+find a solution whenever one exists if it tries every retained
+choice, restores branch state correctly, and prunes only
+branches with no solution. Ordering changes which branch is
+tried first; sound deductions justify omitting branches.
 
 A failed branch must leave no residue in its siblings.
-In graph coloring, suppose A=red caused red to be removed
-from B's current domain. Undoing A=red must restore that
-removal unless another active reason still excludes red.
+In our original four-vertex, three-color instance, suppose
+A=red removed red from B's current domain. Undoing A=red must
+restore that removal unless another active reason still excludes red.
 Copying domains for each branch makes this conceptually
 simple. A **trail** instead records changes so they can be
 undone in reverse order. Either method must restore exactly
@@ -265,8 +301,9 @@ later have to be undone. A zero-size domain means failure;
 a one-value domain may force a choice without branching.
 
 **Degree ordering** can break MRV ties by choosing the
-variable with the most unassigned neighbors. In our graph
-coloring instance, C interacts with A, B, and D; D interacts
+variable with the most unassigned neighbors. In our original
+four-vertex graph, the edges are AB, AC, BC, CD. C therefore
+interacts with A, B, and D; D interacts
 only with C. Degree is a rough measure of influence, since
 constraints differ in restrictiveness.
 
@@ -276,8 +313,9 @@ variables. This is the **least-constraining value**, or LCV,
 rule. Its purpose is to improve the chance that the current
 branch can be completed successfully.
 
-For example, in graph coloring suppose A borders B and C,
-with B's current domain {red,green} and C's {blue,green}.
+For a separate graph coloring example, suppose A is adjacent
+to B and C, with B's current domain {red,green} and C's
+{blue,green}.
 Choosing A red removes one neighbor value, as does choosing
 A blue. Choosing A green removes two. LCV prefers red or
 blue in this local calculation. It tries to preserve useful
@@ -294,7 +332,8 @@ work, so both ordering effects and overhead matter.
 After assigning a variable, **forward checking** removes
 values in neighboring unassigned variables that conflict
 with the new assignment. If a domain empties, backtrack
-immediately.
+immediately. [Tsang (1993)](bibliography.md#tsang-1993)
+places this deduction within CSP backtracking search.
 
 Return to our graph coloring instance with edges AB, AC,
 BC, CD and three colors. Assigning A=red removes red from
@@ -326,16 +365,17 @@ Exhausting both choices proves that this instance has no
 proper two-coloring.
 
 A **sound** deduction never removes a value that occurs in
-a solution of the current branch. A **complete** solver
-finds a solution whenever one exists under its stated
-assumptions. Forward checking supplies sound deductions;
-finite exhaustive backtracking supplies the remaining
-coverage. A single deduction phase need not settle the
-whole instance.
+a solution of the current branch. Forward checking can
+therefore omit assignments while preserving the ability to
+find a solution. If every retained branch fails, backtracking
+can establish that no solution exists. This argument accounts
+for excluded possibilities without claiming to examine every
+state. A single deduction phase need not settle the instance.
 
-## Propagation and complete search in SAT
+## Propagation and backtracking in SAT
 
-SAT's corresponding basic deduction is **unit propagation**.
+SAT's corresponding basic deduction is **unit propagation**
+([Davis, Logemann, and Loveland, 1962](bibliography.md#davis-logemann-loveland-1962)).
 Under a partial truth assignment, a clause is unit when
 exactly one literal remains unassigned and all others are
 false. That literal must be made true. An all-false clause
@@ -349,11 +389,14 @@ Each choice follows from a requirement; there was no need
 to guess in this particular instance.
 
 On another formula, unit propagation may stop while some
-clauses remain unresolved. A complete SAT search can choose
+clauses remain unresolved. A SAT solver can choose
 an unassigned Boolean variable, try a truth value, propagate
 again, and backtrack on conflict. Trying both truth values
-as needed gives a systematic search over the finite
-assignments. If every clause is satisfied while variables
+as needed accounts for all possible solutions. With a fixed
+variable order and no revisits or restarts, the branching is
+systematic over the partial assignments it examines. Pruning
+means it need not examine every assignment. If every clause
+is satisfied while variables
 remain unassigned, any completion preserves satisfaction;
 the solver can fill in those variables to return a complete
 truth assignment.
@@ -361,8 +404,8 @@ truth assignment.
 A contradiction under one decision rules out that branch,
 not necessarily the formula. Only when all relevant branches
 have been excluded is unsatisfiability established. This is
-the same distinction between local consequences and complete
-coverage that we saw in graph coloring.
+the same distinction between one failed branch and excluding
+all possible solutions that we saw in graph coloring.
 
 Practical SAT solvers also analyze conflicts to learn
 clauses and sometimes return past several decisions at once.
@@ -370,29 +413,36 @@ A learned clause must be justified by the formula; it cannot
 merely prohibit an inconvenient candidate. The TABLEAU
 solver in the Crawford–Auton reading gives a concrete
 connection between branching, unit propagation, and measured
-SAT difficulty. We need these underlying ideas here without
+SAT difficulty
+([Crawford and Auton, 1993](bibliography.md#crawford-auton-1993)).
+The basic decision/propagation/backtracking procedure traces
+to [Davis, Logemann, and Loveland (1962)](bibliography.md#davis-logemann-loveland-1962).
+We need these underlying ideas here without
 trying to cover an industrial solver's full design.
 
-The next chapter develops systematic exploration more
+The next chapter compares complete and systematic exploration
 explicitly. The question remains how to account for the
 choices still available while using deductions to avoid
 unnecessary work.
 
 ## Further reading
 
-- Tsang, [*Foundations of Constraint Satisfaction*](https://www.bracil.net/edward/FCS.html)
+- Tsang, [*Foundations of Constraint Satisfaction*](bibliography.md#tsang-1993)
   (Academic Press, 1993). A broad treatment of CSP models,
-  inference, and search. Start with the introductory
-  formulations and the overview of solving methods; the
-  book provides deeper material beyond this course.
+  inference, and search. **Reading suggestion:** Start with
+  the introductory formulations and overview of solving
+  methods; the book provides deeper material beyond this course.
 - Crawford and Auton,
   [“Experimental Results on the Crossover Point in
-  Satisfiability Problems”](https://cdn.aaai.org/AAAI/1993/AAAI93-004.pdf)
+  Satisfiability Problems”](bibliography.md#crawford-auton-1993)
   (AAAI-93, pp. 21–27). Describes TABLEAU and experiments
   relating random SAT instances' constraints to difficulty.
-  Distinguish that measured crossover from the fixed-budget
-  growth illustration in Week 1.
+  **Reading suggestion:** Distinguish that measured crossover
+  from the fixed-budget growth illustration in Week 1.
 - Davis, Logemann, and Loveland,
-  [“A Machine Program for Theorem-Proving”](https://doi.org/10.1145/368273.368557)
+  [“A Machine Program for Theorem-Proving”](bibliography.md#davis-logemann-loveland-1962)
   (1962). An early systematic SAT procedure underlying the
   decision, propagation, and backtracking connection.
+  **Reading suggestion:** Compare that connection with the
+  unit-propagation trace above; the paper is historical context,
+  not a prerequisite for the next chapter.

@@ -3,3 +3,10 @@ __pycache__/
 *.py[cod]
 /research/browser-latest.json
 /CONTINUE.sh
+
+# Share this skill even when agent folders are globally ignored.
+!/.agents/
+/.agents/*
+!/.agents/skills/
+/.agents/skills/*
+!/.agents/skills/search-book-authoring/

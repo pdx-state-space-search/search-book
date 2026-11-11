@@ -1,0 +1,4 @@
+interface:
+  display_name: "Search Book Authoring"
+  short_description: "Draft and review consistent search-course chapters"
+  default_prompt: "Use $search-book-authoring to draft, revise, or review a chapter of the State-Space Search book."

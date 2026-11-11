@@ -160,27 +160,54 @@ iteration, use the smallest exceeded f as the next threshold.
 Do not simply add one: costs and estimates may be fractional,
 irregular, or separated by large gaps.
 
-```text
-current_path := [start]
-bound := h(start)
-repeat:
-    next_bound := infinity
-    result := visit(start, g=0, bound, current_path)
-    if result is a solution: return result
-    if next_bound = infinity: return failure
-    bound := next_bound
+<figure class="algorithm" id="ida-star-pseudocode"
+        aria-labelledby="ida-star-algorithm">
+<figcaption id="ida-star-algorithm">
+<strong>IDA*</strong> from <var>start</var>;
+returning a solution path or <em>failure</em>.
+</figcaption>
+<div class="algorithm-body" tabindex="0"
+     role="region" aria-label="Iterative deepening A-star steps">
+<ol class="algorithm-steps">
+<li><span class="algorithm-statement"><var>current_path</var> ← [<var>start</var>]</span></li>
+<li><span class="algorithm-statement"><var>bound</var> ← <var>h</var>(<var>start</var>)</span></li>
+<li><span class="algorithm-statement"><strong>repeat</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><var>next_bound</var> ← ∞</span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><var>result</var> ← <span class="algorithm-procedure">Visit</span>(<var>start</var>, 0, <var>bound</var>, <var>current_path</var>)</span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><strong>if</strong> <var>result</var> is a solution <strong>then</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 2"><strong>return</strong> <var>result</var></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><strong>if</strong> <var>next_bound</var> = ∞ <strong>then</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 2"><strong>return</strong> <em>failure</em></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><var>bound</var> ← <var>next_bound</var></span></li>
+</ol>
+</div>
+</figure>
 
-visit(state, g, bound, path):
-    f := g + h(state)
-    if f > bound:
-        next_bound := min(next_bound, f)
-        return failure
-    if goal(state): return a copy of the current path
-    for each successor not already on path:
-        extend path, recurse with its cost, and restore path
-        if recursion found a solution: return it
-    return failure
-```
+<figure class="algorithm" id="ida-visit-pseudocode"
+        aria-labelledby="ida-visit-algorithm">
+<figcaption id="ida-visit-algorithm">
+<strong>VISIT</strong> <var>state</var> along <var>path</var> of cost <var>g</var>, within <var>bound</var>;
+returning a solution path or <em>failure</em>.
+</figcaption>
+<div class="algorithm-body" tabindex="0"
+     role="region" aria-label="IDA-star recursive traversal steps">
+<ol class="algorithm-steps">
+<li><span class="algorithm-statement"><var>f</var> ← <var>g</var> + <var>h</var>(<var>state</var>)</span></li>
+<li><span class="algorithm-statement"><strong>if</strong> <var>f</var> &gt; <var>bound</var> <strong>then</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><var>next_bound</var> ← min(<var>next_bound</var>, <var>f</var>)</span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><strong>return</strong> <em>failure</em></span></li>
+<li><span class="algorithm-statement"><strong>if</strong> <span class="algorithm-procedure">Goal</span>(<var>state</var>) <strong>then</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><strong>return</strong> a copy of the current path</span></li>
+<li><span class="algorithm-statement"><strong>for each</strong> successor not already on <var>path</var> <strong>do</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 1">Extend <var>path</var> to the successor</span></li>
+<li><span class="algorithm-statement" style="--indent: 1">Recurse with its cost</span></li>
+<li><span class="algorithm-statement" style="--indent: 1">Restore <var>path</var></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><strong>if</strong> recursion found a solution <strong>then</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 2"><strong>return</strong> it</span></li>
+<li><span class="algorithm-statement"><strong>return</strong> <em>failure</em></span></li>
+</ol>
+</div>
+</figure>
 
 The shared next_bound is reset once per iteration.
 Test f before accepting a goal, so a goal outside the current
@@ -273,21 +300,33 @@ and the second-best child's F. If the chosen branch later
 exceeds that limit, the recursive call returns its revised
 F. Store the summary and compare alternatives again.
 
-```text
-RBFS(node, limit):
-    if node is a goal: return solution, F(node)
-    generate children excluding active-path cycles
-    initialize each child's F
-    if no children exist: return failure, infinity
-    repeat:
-        choose best and second-best children by F
-        if F(best) = infinity or F(best) > limit:
-            return failure, F(best)
-        alternative := F(second-best), or infinity if absent
-        result, revised := RBFS(best, min(limit, alternative))
-        F(best) := revised
-        if result is a solution: return result, revised
-```
+<figure class="algorithm" id="rbfs-pseudocode"
+        aria-labelledby="rbfs-algorithm">
+<figcaption id="rbfs-algorithm">
+<strong>RBFS</strong> from <var>node</var> within <var>limit</var>;
+returning a solution or <em>failure</em>, with a revised bound.
+</figcaption>
+<div class="algorithm-body" tabindex="0"
+     role="region" aria-label="Recursive best-first search steps">
+<ol class="algorithm-steps">
+<li><span class="algorithm-statement"><strong>if</strong> <var>node</var> is a goal <strong>then</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><strong>return</strong> solution, <var>F</var>(<var>node</var>)</span></li>
+<li><span class="algorithm-statement">Generate children excluding active-path cycles</span></li>
+<li><span class="algorithm-statement">Initialize each child's <var>F</var></span></li>
+<li><span class="algorithm-statement"><strong>if</strong> no children exist <strong>then</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><strong>return</strong> <em>failure</em>, ∞</span></li>
+<li><span class="algorithm-statement"><strong>repeat</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 1">Choose <var>best</var> and <var>second-best</var> children by <var>F</var></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><strong>if</strong> <var>F</var>(<var>best</var>) = ∞ <strong>or</strong> <var>F</var>(<var>best</var>) &gt; <var>limit</var> <strong>then</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 2"><strong>return</strong> <em>failure</em>, <var>F</var>(<var>best</var>)</span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><var>alternative</var> ← <var>F</var>(<var>second-best</var>), or ∞ if absent</span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><var>result</var>, <var>revised</var> ← <span class="algorithm-procedure">RBFS</span>(<var>best</var>, min(<var>limit</var>, <var>alternative</var>))</span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><var>F</var>(<var>best</var>) ← <var>revised</var></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><strong>if</strong> <var>result</var> is a solution <strong>then</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 2"><strong>return</strong> <var>result</var>, <var>revised</var></span></li>
+</ol>
+</div>
+</figure>
 
 The infinity test is necessary. When the best branch is
 exhausted and the limit is also infinity, the comparison
@@ -337,11 +376,12 @@ memory policies decide how much previously discovered
 structure remains immediately available. There is no
 universal winner: heuristic strength, table storage,
 duplicate frequency, successor cost, and available memory
-all influence the practical tradeoff.
+all influence the practical tradeoff. IDA* and RBFS are not
+systematic in general: regeneration can examine a state again.
 
 The next chapter changes strategy more substantially.
 Local search keeps complete candidates and repairs them,
-rather than retaining a systematic account of every
+rather than retaining an explicit account of every
 unexplored branch.
 
 ## Further reading

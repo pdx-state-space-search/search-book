@@ -123,3 +123,84 @@ https://aima.eecs.berkeley.edu/translations.html
 
 These checks do not claim comprehensive audits of the works.
 No source prose, figures, or algorithm listings were adapted.
+
+## Bibliography follow-up — 2026-10-27 Pacific
+
+Created a separate book-wide bibliography with 29 entries:
+all existing weekly reading-list works plus Sutton–Barto
+and Junttila. An exact URL comparison confirms every external
+link in the current weekly reading lists occurs in the
+bibliography. Existing citation metadata and primary-source
+records above and in the recovery/source-review notes were
+reused rather than presumed to be full-paper evidence.
+
+New concept checks:
+
+- Tomi Junttila, CNF Translations, 2023 Aalto course notes:
+  https://users.aalto.fi/~tjunttil/2023-DP-AUT/notes-sat/cnf2.html
+  Read Method 3 and its assignment correspondence. It supports
+  auxiliary variables, linear-size CNF, and recovering an
+  original assignment by projection. The chapter distinguishes
+  this construction from same-variable logical equivalence.
+- Richard S. Sutton and Andrew G. Barto, Reinforcement Learning:
+  An Introduction, 2nd edition, MIT Press, 2018. Publisher
+  metadata checked at
+  https://mitpress.mit.edu/9780262039246/reinforcement-learning/
+  Downloaded the author-written text hosted for a CMU course:
+  https://www.andrew.cmu.edu/course/10-703/textbook/BartoSutton.pdf
+  Checked the edition and §3.1's Markov-state discussion
+  (PDF page 71), not the whole book. The author's site timed
+  out; the CMU copy supplied the actual supporting passage.
+
+Retrieved publisher-deposited Crossref metadata for some
+existing DOI references; reduced records and HTTP 429 failures
+are saved in bibliography-metadata-2026-10-27.json. Rate-limited
+records were not treated as successful checks. Primary-page
+follow-up confirmed Dijkstra's author-institution record,
+Korf 1985 and 1993, Knuth–Moore, the original JACM index
+for Dechter–Pearl, Lourenço–Martin–Stützle, and the INFORMS
+contents listing for Johnson et al. Publication fields in
+the bibliography follow these records and earlier verified
+metadata. Shannon was caught as an omission during independent
+review and added using the retrieved publisher metadata.
+
+Independent review of the new Weeks 1–2 changes found no
+technical defect, and caught one ambiguous return to the
+original four-vertex graph after the two-color triangle.
+The instance re-entry was made explicit. Neither the metadata
+checks nor this editorial review constitute full-paper audits.
+
+## Week 1 emergence addition — 2026-10-28 Pacific
+
+Melanie Mitchell, Complex Systems: Network Thinking,
+Artificial Intelligence 170(18), 1194–1212, December 2006.
+DOI: https://doi.org/10.1016/j.artint.2006.10.002
+Publisher metadata and abstract checked at
+https://www.sciencedirect.com/science/article/pii/S000437020600083X
+Read §2 of the author-written SFI working paper 2006-10-036:
+https://sfi-edu.s3.amazonaws.com/sfi-edu/production/uploads/sfi-com/dev/uploads/filer/67/c4/67c4bcce-7e58-4819-8aed-9a67163dd441/06-10-036.pdf
+The journal DOI failed to open in the browser tool; the
+publisher article page and SFI text supplied the checks.
+
+The selected passage supports the local-to-global interaction
+viewpoint. The chapter's coloring-repair trace and separate
+synchronous two-vertex cycle are original illustrations,
+not examples attributed to Mitchell. No source prose or
+figures were adapted, and no full-paper audit is claimed.
+The shared bibliography now contains 30 entries.
+
+## CIRL reading connection — 2026-11-11 Pacific
+
+Matthew L. Ginsberg, Dynamic Backtracking, JAIR 1 (1993),
+25–46. Author-deposited paper:
+https://arxiv.org/abs/cs/9308101
+https://arxiv.org/pdf/cs/9308101
+Checked the title page and introduction. The title page lists
+CIRL, University of Oregon. The introduction distinguishes
+backjumping from retaining independent successful assignments
+when changing a cause of failure. This is a reading connection
+for the approved learning-from-failure topic, distinct from
+the previously checked GRASP SAT conflict-learning source.
+No full-paper review or algorithm implementation is claimed.
+Bart's personal CIRL connection is recorded from his account
+in BRIEF.md for the eventual Epilogue.

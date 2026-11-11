@@ -112,3 +112,71 @@ Readings include Tsang and Crawford–Auton on TABLEAU.
 WalkSAT belongs in the local-search week. All contents
 labels should agree with chapter titles. Longer chapters
 are acceptable when the extra material supplies clarity.
+
+## Bibliography and reading advice — 2026-10-27 Pacific
+
+Maintain a bibliography for the whole book, separate from
+suggested readings. Cite sources for named concepts such as
+the Markov property where they are introduced. Distinguish
+descriptions of suggested readings from instructions to the
+reader. When returning to one worked example, identify our
+particular instance rather than implying a claim about the
+problem in general.
+
+## Outline-first authoring — 2026-10-28 Pacific
+
+Start chapters with a two-level outline, one level at a time:
+establish top-level sections before subsections, then draft
+prose. Reconsider Week 1's organization at the top level
+before rewriting it. Add emergent behavior as another
+philosophical focus alongside computational difficulty.
+Keep Week 1 as one chapter, grouped into Part I (Why Search?)
+and Part II (Modeling and Assessing Search). This supersedes
+the proposed split into separate reading chapters and preserves
+the mapping between chapters and weeks. Both outline levels are accepted for rewriting. Place
+Problems, Instances, and Models first in Part II, leaving
+three main sections in Part I and five in Part II. Give the
+opening examples only the brief problem/instance distinction
+needed by Part I. Reuse existing prose where appropriate.
+
+## Pseudocode presentation — 2026-10-29 Pacific
+
+Typeset pseudocode like an algorithms textbook, rather than
+as typewriter text. Use ← for assignment and one statement
+per line. Preserve clear control-flow indentation and
+mathematical typography in the rendered book.
+Keep the header to a brief task sentence: the operation's
+name in capitals, its inputs in context, and its result or
+effect. The surrounding text provides the details.
+
+## Coverage and guidance — 2026-11-11 Pacific
+
+Use Bart's definitions: complete search eventually examines
+all states in the stated space; systematic search examines
+each state at most once. Distinguish continued traversal from
+an early-stopping solver. Duplicate filtering precedes state
+examination; actual reopening or regeneration can repeat it.
+Sound pruning may preserve solution or optimality guarantees
+without examining all states. State those guarantees directly.
+
+Teach anytime search explicitly, beginning with deterministic
+branch-and-bound before stochastic policies and certificates.
+Give admissibility a full treatment including the positive
+value of inadmissible guidance. Distinguish ordering estimates
+from justified pruning/certification bounds. The outline adds
+this coverage; fuller chapter treatments follow its review.
+
+## Approved topic additions — 2026-11-11 Pacific
+
+Add learning from failure (Week 2), limited discrepancy search
+(Week 3), beam search (Week 5), and worked symmetry reduction
+(Week 8). All four are approved core coverage, with concrete
+examples and the existing chapter/topic hierarchy preserved.
+Keep their treatment focused within the ten-week scope.
+
+Bart reports that learning from failure, symmetry reduction,
+and limited discrepancy search connect to work at CIRL during
+his time there. Reflect that in reading choices and retain it
+for the Epilogue's history discussion. Ginsberg's Dynamic
+Backtracking is a relevant CIRL source; GRASP remains a
+separate connection for the SAT clause-learning example.

@@ -56,7 +56,7 @@ repeats all earlier definitions.
 | --- | --- |
 | 1 | What is the space we are searching? |
 | 2 | How can constraints rule out choices early? |
-| 3 | How can systematic exploration establish completeness? |
+| 3 | What ensures full coverage, and when do we repeat states? |
 | 4 | How should costs and estimates order the frontier? |
 | 5 | Where do useful heuristics come from, and what if memory fills? |
 | 6 | How can a complete candidate solution be repaired? |
@@ -66,8 +66,8 @@ repeats all earlier definitions.
 | 10 | How do these foundations support stronger search methods? |
 
 Constraint satisfaction appears early because it makes the
-role of modeling and inference especially clear. Complete
-search and best-first search then develop complementary
+role of modeling and inference especially clear. Traversal
+policies and best-first search then develop complementary
 ways to explore possibilities. Local and stochastic methods
 trade some guarantees for the ability to improve candidates
 quickly. Engineering matters throughout, with a chapter

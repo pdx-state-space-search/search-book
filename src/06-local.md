@@ -7,7 +7,7 @@ of all partial solutions. The main questions are how to score
 a candidate, what changes to allow, and how to escape a region
 where the available changes no longer help.
 
-The systematic methods in [Week 3](03-systematic.md) retain
+The traversal methods in [Week 3](03-systematic.md) retain
 information about unexplored alternatives. Local search
 usually retains one candidate, or a small collection, and
 forgets much of its earlier trajectory. This can make its
@@ -349,5 +349,5 @@ how to evaluate the resulting variation from run to run.
 - Korf, [“A Complete Anytime Algorithm for Number
   Partitioning”](https://web.cecs.pdx.edu/bart/cs510cs/papers/korf-ckk.pdf)
   (1998). A useful contrast: a heuristic partitioning idea
-  extended into complete anytime search, retaining information
+  extended into anytime search, retaining information
   needed to prove optimality.

@@ -1,6 +1,34 @@
 # Continue the State Space Search course book
 
-## Current authoring state — 2026-10-27 Pacific
+## Latest decisions — 2026-11-11 Pacific
+
+Early chapter terminology now follows Bart's definitions:
+complete search eventually examines every state in the stated
+space; systematic search examines each state at most once.
+Distinguish continued traversal, early stopping, and sound
+pruning. Pruned states do not count as examined. Actual
+regeneration and reopening can violate systematicity.
+
+OUTLINE.md now groups the existing topic subsections under
+sections and expands planned anytime and inadmissible-heuristic
+coverage. The chapter sources have terminology corrections,
+not the full proposed reorganization or expanded treatments.
+See the latest review-log entry and three literature/terminology
+notes dated 2026-11-11. Beam search, a learned-conflict trace, limited discrepancy
+search, and worked symmetry reduction are approved additions.
+
+## Current authoring state — 2026-10-28 Pacific
+
+Latest change: Week 1 has been rewritten to the accepted
+outline as one chapter with Part I and Part II. Problems,
+Instances, and Models opens Part II. Emergent behavior now
+has a sourced introduction, a local repair trace, and a
+contrasting synchronous cycle. See
+research/review-2026-10-28-week1-rewrite.md for independent
+review and the corrected road-model example. The chapter
+awaits Bart's next read; do not continue other revisions
+without a user request. Its pre-rewrite source is preserved
+in research/revisions/01-models-before-outline-2026-10-28.md.
 
 Manual instructor review and substantive revision are in
 progress. Read STATUS.md, BOOK-NOTES.md, and the newest
@@ -16,7 +44,18 @@ is reserved for history and authorship discussion. The
 early-AI/hardware historical claim is deferred.
 Weeks 1–2 await Bart's next read. Weeks 3–10 remain first
 drafts awaiting manual review; Week 6 has the small SAT
-addition. Commit only when requested; do not push without
+addition. A later agent review of every remaining chapter
+is complete: start with
+research/review-2026-10-27-remaining-chapters.md and its
+three detailed reports. These are a revision queue, not
+implemented chapter changes. In particular, repair Week 9's
+solved-value exception to exact fixed-horizon semantics.
+Use .agents/skills/search-book-authoring/SKILL.md for chapter
+work. The latest Weeks 1–2 follow-up adds NP/CNF clarification,
+readable finite quantification, and bibliography citations.
+The book-wide bibliography exists; later chapters still need
+point-of-use references and sources flagged in the reviews.
+Commit only when requested; do not push without
 separate explicit permission.
 The completion statements below describe the first-draft
 checkpoint, not completion of all book authoring.

@@ -29,6 +29,24 @@ mean equality of all information relevant to future choices.
 | domain D(X) | Values still allowed for CSP variable X. |
 | constraint | A relation specifying permitted combinations. |
 
+## Complete and systematic search
+
+A search is **complete** if it eventually examines every state
+in the stated space. It is **systematic** if it examines each
+state at most once. For traversal from an initial state, use
+the reachable-state space. Examination means selecting a
+state for substantive search processing after duplicate or
+stale-record filtering. Generation and ranking are separate
+work; discarding a duplicate record is not another examination.
+
+Specify whether a claim describes continued traversal or a
+solver stopping at an answer. Continued traversal includes
+successors of goal states unless the model makes them terminal.
+Sound pruning can establish a solution, impossibility, or
+optimality without examining every state. State those answer
+guarantees separately from completeness. Reopening and
+regeneration that process a state again are not systematic.
+
 ## Costs and search-space assumptions
 
 Unless a chapter says otherwise, examples of shortest-path

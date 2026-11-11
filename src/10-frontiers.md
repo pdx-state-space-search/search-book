@@ -273,8 +273,9 @@ not remove combinatorial difficulty.
 
 Keisuke Okumura's LaCAM work offers a more recent connection
 between configuration search and constraint-driven successor
-generation. Its 2023 AAAI paper presents a complete method
-using lazy constraint addition to organize the generation
+generation. Its 2023 AAAI paper guarantees finding a feasible
+plan when one exists under its stated assumptions, using lazy
+constraint addition to organize the generation
 of joint configurations. The useful design idea is to avoid
 materializing all joint moves eagerly.
 
@@ -287,7 +288,7 @@ completed optimality argument remains essential.
 
 These papers are examples of current research directions,
 not a claim that one planner wins on every MAPF instance.
-Their model, objective, completeness conditions, benchmark
+Their model, objective, solution-finding conditions, benchmark
 distribution, and resource budget determine how to interpret
 reported results.
 
@@ -296,7 +297,7 @@ reported results.
 Learned models can suggest promising successors, conflicts,
 or moves. If guidance only changes ordering inside an
 otherwise complete search, completeness can survive when
-all required alternatives are eventually considered.
+every state in the stated space is eventually examined.
 Permanent learned pruning or replacing an admissible bound
 with an unchecked prediction needs a new argument.
 

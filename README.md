@@ -7,6 +7,21 @@ in progress. The introduction and Weeks 1–2 were revised from
 feedback on 2026-10-27. Week 6 now includes a short SAT
 local-search section introducing WalkSAT.
 
+The latest follow-up clarifies NP-completeness and CNF
+conversion, improves the quantified formula's presentation,
+and adds a book-wide bibliography. A careful review of
+Weeks 3–10 found further teaching work and one technical
+specification correction; see the
+[review synthesis](research/review-2026-10-27-remaining-chapters.md).
+Those chapters have not yet been revised from that review.
+
+Week 1 was reorganized on 2026-10-28 into Part I (Why Search?)
+and Part II (Modeling and Assessing Search). It follows the
+accepted outline and adds a sourced emergence discussion
+with two small traces. The rewritten chapter awaits instructor
+review; its [independent review](research/review-2026-10-28-week1-rewrite.md)
+records the check scope and integrated correction.
+
 ## Read or build
 
 From any directory:
@@ -33,13 +48,24 @@ scheduling are compressed applications in the engineering week.
 
 The initial weekly target was approximately 2,500–3,500 words,
 including a few short reading recommendations. The revised
-Week 1 contains about 3,900 words and Week 2 about 2,800;
+Week 1 contains about 4,600 words and Week 2 about 3,200;
 the other weekly chapters contain about 2,100–2,500.
 Further changes follow instructional
 needs rather than a fixed word count. Reflowable HTML
 has no fixed page count; page length is not forced by small type
 or by hiding necessary explanations. Figures have descriptive
 alternatives and can be enlarged with the rest of the page.
+
+## Authoring
+
+Use the repository's
+[chapter authoring skill](.agents/skills/search-book-authoring/SKILL.md)
+for drafting, substantive revision, and editorial review.
+Its [editorial guide](.agents/skills/search-book-authoring/references/editorial-guide.md)
+and annotated examples capture the shared teaching style.
+Invoke it explicitly as `$search-book-authoring` when needed.
+BRIEF.md retains course scope and topic allocation;
+BOOK-NOTES.md remains Bart's working feedback.
 
 ## Verification
 

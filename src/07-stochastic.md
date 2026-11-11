@@ -212,9 +212,9 @@ globally optimal. A time-limited repair may also fail to solve
 its subproblem to optimality; retaining the original candidate
 preserves an available feasible answer.
 
-These methods connect local search to the complete methods
+These methods connect local search to the exact methods
 from earlier weeks. A heuristic outer search can identify
-promising regions, while a complete inner search reasons
+promising regions, while an exact inner solver reasons
 precisely within one region. Describe both levels when stating
 what an experiment or correctness argument establishes.
 
@@ -254,7 +254,7 @@ merely thousands of seeds on one puzzle.
 
 Fair budgets require a meaningful cost unit. One method's
 "iteration" may evaluate one move; another's may inspect an
-entire neighborhood or call a complete solver. Wall-clock
+entire neighborhood or call an exact solver. Wall-clock
 time compares actual implementations on specified hardware.
 Objective-evaluation and expansion counts help explain work,
 but may omit queue, copying, communication, or repair costs.

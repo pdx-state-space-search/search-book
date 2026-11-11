@@ -6,6 +6,12 @@ technical detail that a short chapter cannot fully develop,
 and to offer a path into the literature. Reading every
 listed item is not necessary to follow the next chapter.
 
+The [bibliography](bibliography.md) collects full references
+for the book. In-text citations point there to identify
+sources for concepts and claims. A citation need not be a
+suggested assignment; the weekly recommendations describe
+selected works and give separate reading advice.
+
 For a first pass, read the chapter's main argument and work
 through its example. If a method's guarantee is unclear,
 identify its assumptions before consulting a longer source.

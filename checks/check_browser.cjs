@@ -57,7 +57,7 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
     const built = await fs.readdir(path.join(root, '_build'));
     const chapters = built.filter(n => /^\d\d-.*\.html$/.test(n));
     if (chapters.length !== 10) throw Error('Expected ten built weekly chapters');
-    const pages = [...chapters.sort(),'introduction.html','notation.html','reading-guide.html','attribution.html','epilogue.html'];
+    const pages = [...chapters.sort(),'introduction.html','notation.html','reading-guide.html','bibliography.html','attribution.html','epilogue.html'];
     const results = [];
     for (const [mode, width, fontScale] of [['desktop',1440,1],['narrow',390,1],['text-zoom-200',1440,2]]) {
       await send('Emulation.setDeviceMetricsOverride', {width,height:1000,deviceScaleFactor:1,mobile:false});
@@ -74,13 +74,19 @@ const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
           await fs.writeFile(path.join(tmp,mode+'-'+file+'-'+suffix+'.png'),Buffer.from(capture.data,'base64'));
         };
         await screenshot('opening');
+        const partHeadings = '[...document.querySelectorAll("main h2")].filter(h=>/^Part [IVX]+:/.test(h.textContent))';
+        const parts = await send('Runtime.evaluate',{expression:partHeadings+'.length',returnByValue:true});
+        for (let i=0; i<parts.result.value; i++) {
+          await send('Runtime.evaluate',{expression:partHeadings+'['+i+'].scrollIntoView({block:"start"})'});
+          await screenshot('part-'+i);
+        }
         // Capture teaching content as well as page openings for manual QA.
-        const count = await send('Runtime.evaluate',{expression:'document.querySelectorAll("main img, main pre, main table").length',returnByValue:true});
+        const count = await send('Runtime.evaluate',{expression:'document.querySelectorAll("main img, main pre, main table, main .algorithm").length',returnByValue:true});
         for (let i=0; i<count.result.value; i++) {
-          await send('Runtime.evaluate',{expression:'document.querySelectorAll("main img, main pre, main table")['+i+'].scrollIntoView({block:"center"})'});
+          await send('Runtime.evaluate',{expression:'document.querySelectorAll("main img, main pre, main table, main .algorithm")['+i+'].scrollIntoView({block:"center"})'});
           await screenshot('content-'+i);
         }
-        const quantified = '[...document.querySelectorAll("main p > strong")].filter(p=>/[∀∃]/.test(p.textContent))';
+        const quantified = '[...document.querySelectorAll("main .formula, main p > strong")].filter(p=>/[∀∃]/.test(p.textContent))';
         const formulas = await send('Runtime.evaluate',{expression:quantified+'.length',returnByValue:true});
         for (let i=0; i<formulas.result.value; i++) {
           await send('Runtime.evaluate',{expression:quantified+'['+i+'].scrollIntoView({block:"center"})'});

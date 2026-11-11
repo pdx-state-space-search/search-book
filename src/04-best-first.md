@@ -57,24 +57,34 @@ improved path and leaves the old entry in the queue.
 On removal, compare the stored cost with current best_g.
 An outdated entry is **stale** and must be skipped.
 
-```text
-best_g[start] := 0
-insert an entry for start with g=0 and its priority
-
-while the queue is not empty:
-    entry := remove a minimum-priority entry
-    s := entry.state
-    if entry.g != best_g[s]: continue
-    if goal(s): return the path represented by entry
-
-    for each edge s→t of cost c:
-        candidate := entry.g + c
-        if t has no recorded cost or candidate < best_g[t]:
-            best_g[t] := candidate
-            create a path entry for t, linked to entry
-            insert it with the chosen priority
-return failure
-```
+<figure class="algorithm" id="best-first-pseudocode"
+        aria-labelledby="best-first-algorithm">
+<figcaption id="best-first-algorithm">
+<strong>BEST-FIRST SEARCH</strong> from <var>start</var> using the chosen priority;
+returning a solution path or <em>failure</em>.
+</figcaption>
+<div class="algorithm-body" tabindex="0"
+     role="region" aria-label="Best-first search steps">
+<ol class="algorithm-steps">
+<li><span class="algorithm-statement"><var>best_g</var>[<var>start</var>] ← 0</span></li>
+<li><span class="algorithm-statement">Insert an entry for <var>start</var> with <var>g</var> = 0 and its priority</span></li>
+<li><span class="algorithm-statement"><strong>while</strong> the queue is not empty <strong>do</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><var>entry</var> ← remove a minimum-priority entry</span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><var>s</var> ← <var>entry</var>.<var>state</var></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><strong>if</strong> <var>entry</var>.<var>g</var> ≠ <var>best_g</var>[<var>s</var>] <strong>then</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 2"><strong>continue</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><strong>if</strong> <span class="algorithm-procedure">Goal</span>(<var>s</var>) <strong>then</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 2"><strong>return</strong> the path represented by <var>entry</var></span></li>
+<li><span class="algorithm-statement" style="--indent: 1"><strong>for each</strong> edge <var>s</var> → <var>t</var> of cost <var>c</var> <strong>do</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 2"><var>candidate</var> ← <var>entry</var>.<var>g</var> + <var>c</var></span></li>
+<li><span class="algorithm-statement" style="--indent: 2"><strong>if</strong> <var>t</var> has no recorded cost <strong>or</strong> <var>candidate</var> &lt; <var>best_g</var>[<var>t</var>] <strong>then</strong></span></li>
+<li><span class="algorithm-statement" style="--indent: 3"><var>best_g</var>[<var>t</var>] ← <var>candidate</var></span></li>
+<li><span class="algorithm-statement" style="--indent: 3">Create a path entry for <var>t</var>, linked to <var>entry</var></span></li>
+<li><span class="algorithm-statement" style="--indent: 3">Insert it with the chosen priority</span></li>
+<li><span class="algorithm-statement"><strong>return</strong> <em>failure</em></span></li>
+</ol>
+</div>
+</figure>
 
 Each path entry here has an immutable parent-entry link.
 Reconstruction therefore follows the exact route represented
@@ -106,7 +116,7 @@ not yet a reason to stop.
 The queue first contains A at cost 1 and G at cost 10.
 Removing A discovers a better G entry at cost 2.
 That entry is removed next and returns S→A→G.
-The old cost-10 entry is stale if it is ever examined.
+The old cost-10 entry is stale if it is ever removed.
 
 This example motivates accepting a goal on a nonstale
 minimum removal, rather than on generation. Generating a
@@ -173,8 +183,9 @@ and B has true remaining cost 4. Even setting h(S)=0 makes
 this example consistent. Neither property makes greedy
 search cost-optimal; its priority omits accumulated cost.
 
-A finite graph can be searched completely with adequate
-duplicate control. An infinite graph can defeat greedy
+Continued greedy traversal of a finite reachable graph can
+be complete with adequate duplicate control. Stopping at its
+first goal need not examine the whole space. An infinite graph can defeat greedy
 search even with finite branching and positive costs:
 an infinite sequence of attractive estimates can keep
 outranking a reachable goal elsewhere.
@@ -237,7 +248,8 @@ Adding g(s) shows that f cannot decrease along a path:
 g(s)+h(s)≤g(s)+c(s,t)+h(t).
 With consistent h, a state's first nonstale A* expansion has
 its least possible path cost. A permanent closed set can
-therefore finalize it.
+therefore finalize it. Such a policy is systematic: stale
+records are discarded before another state examination.
 
 Consistency also implies admissibility for states with a
 finite route to a goal, when goal estimates are zero.
@@ -265,7 +277,8 @@ on B→A because 4 is greater than 1+0.
 | A, g=2, f=2 | Improve G to g=5,f=5 |
 | G, g=5, f=5 | Return S→B→A→G, cost 5 |
 
-A must be expanded twice. A version that permanently closes
+A must be expanded twice, so this search is not systematic.
+A version that permanently closes
 A after its first expansion can instead return cost 6.
 The strict-improvement loop permits the reopening naturally:
 the new A record is eligible even though an older A record

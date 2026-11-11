@@ -2,6 +2,9 @@
 .content main { font-size: 1.8rem; line-height: 1.65; }
 .content p, .content li { overflow-wrap: break-word; }
 .content h1, .content h2, .content h3 { line-height: 1.25; }
+.content :is(h1, h2, h3, h4, .algorithm) {
+  scroll-margin-top: calc(var(--menu-bar-height, 50px) + 1rem);
+}
 .content img {
   display: block; margin-inline: auto;
   max-width: 100%; height: auto;
@@ -12,6 +15,48 @@
 .content figure { margin: 1.8em 0; }
 .content figcaption { font-size: .92em; }
 .content a { text-underline-offset: .15em; }
+.content .formula {
+  border-left: 3px solid var(--links);
+  padding: .6em .85em;
+  font-weight: 500;
+}
+.content .formula > span { display: inline-block; }
+.content .formula > .formula-prefix {
+  display: block;
+  margin-bottom: .3em;
+}
+.content .algorithm {
+  border-block: 1px solid var(--table-border-color, var(--fg));
+  padding-block: .8em;
+  font-family: Georgia, "Times New Roman", serif;
+}
+.content .algorithm figcaption {
+  margin-bottom: .8em;
+  font-size: 1em;
+  font-style: normal;
+  font-weight: normal;
+}
+.content .algorithm-procedure { font-variant: small-caps; }
+.content .algorithm-body { overflow-x: auto; }
+.content .algorithm-steps {
+  box-sizing: border-box;
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+  padding: 0 .4em .3em 2em;
+  line-height: 1.65;
+}
+.content .algorithm-steps li { padding-left: .4em; }
+.content .algorithm-steps li::marker {
+  color: var(--fg);
+  font-size: .85em;
+  font-variant-numeric: tabular-nums;
+}
+.content .algorithm-statement {
+  display: block;
+  padding-inline-start: calc(var(--indent, 0) * 1.4em);
+  white-space: nowrap;
+}
 @media (min-width: 1081px) {
   .content { padding-inline: 100px; }
 }
